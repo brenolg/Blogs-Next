@@ -41,7 +41,7 @@ export class JsonPostRepository implements PostRepository {
     return post;
   }
 
-  async findBySlug(slug: string): Promise<PostModel> {
+  async findBySlugPublic(slug: string): Promise<PostModel> {
     await this.simulateWait();
     const posts = await this.findAllPublic();
     const post = posts.find((post) => post.slug === slug);
@@ -49,6 +49,15 @@ export class JsonPostRepository implements PostRepository {
     if (!post) throw new Error("Post não encontrado para slug");
 
     return post;
+  }
+
+  async findAll(): Promise<PostModel[]> {
+    await this.simulateWait();
+
+    console.log("\n", "findAll", "\n");
+
+    const posts = await this.readFromDisk();
+    return posts;
   }
 }
 
